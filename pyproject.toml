@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+[tool.setuptools]
+py-modules = []
+[project]
+name = "tpch-duckdb-bench"
+description = "DuckDB benchmarks with varying number of threads and CPU Frequency scaling using TPCH"
+readme = "README.md"
+requires-python = ">= 3.8"
+dynamic = ["version"]
+dependencies = [
+    "ibis-framework",
+    "click",
+    "duckdb==0.7.1",
+    "duckdb-engine",
+    "pyarrow",
+    "pandas",
+    "psutil",
+    "jinja2"
+]
