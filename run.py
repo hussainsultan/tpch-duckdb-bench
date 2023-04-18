@@ -1,32 +1,48 @@
 import concurrent.futures
 import datetime
 import itertools
-import json
 import os
 import platform
 import sys
 import time
 import timeit
-import traceback
 import warnings
-from pathlib import Path
-from shutil import which
 from multiprocessing import Pipe, Process
+from pathlib import Path
 
 import click
-import duckdb
 import ibis
 import pandas as pd
 import psutil
-from jinja2 import Template
 
-
-warnings.filterwarnings("ignore")
-# Fix
+warnings.filterwarnings("ignore")  # ibis throws some warnings
+# assumes that submodule is present in parent directory
 sys.path.append("tpc-queries")
 
-from ibis_tpc import (h01, h02, h03, h04, h05, h06, h07, h08, h09, h10, h11,
-                      h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22)
+from ibis_tpc import (
+    h01,
+    h02,
+    h03,
+    h04,
+    h05,
+    h06,
+    h07,
+    h08,
+    h09,
+    h10,
+    h11,
+    h12,
+    h13,
+    h14,
+    h15,
+    h16,
+    h17,
+    h18,
+    h19,
+    h20,
+    h21,
+    h22,
+)
 
 BACKENDS = {"duckdb": ibis.duckdb.connect}
 
@@ -56,7 +72,51 @@ QUERIES_TPCH = {
 }
 
 
-def setup_tpch_db(datadir, engine="duckdb", threads=8):
+class PowercapRapl(Process):
+    def __init__(self, pipe, *args, **kw):
+        self.pipe = pipe
+        super(PowercapRapl, self).__init__(*args, **kw)
+
+    def run(self):
+        self.pipe.send(0)
+        stop = False
+        energy_uj = []
+        start_time = timeit.default_timer()
+        while True:
+            with open(
+                "/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/energy_uj"
+            ) as rapl:
+                energy_uj.append(int(rapl.read()))
+            if stop:
+                if energy_uj[0] > energy_uj[-1]:
+                    energy_uj[-1] = (
+                        energy_uj[-1] + 65532610987
+                    )  # fix: this needs to read the max buffer value from intel-rapl:0/
+                stop_time = timeit.default_timer()
+                self.pipe.send((energy_uj[-1] - energy_uj[0], stop_time - start_time))
+                break
+            stop = self.pipe.poll(0.1)
+
+
+class PowercapRaplProfiler:
+    def __init__(self):
+        self.results = []
+        self.total_time = None
+
+    def __enter__(self):
+        self.child_conn, self.parent_conn = Pipe()
+        p = PowercapRapl(self.child_conn)
+        p.start()
+        self.parent_conn.recv()
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.parent_conn.send(0)
+        self.results, self.total_time = self.parent_conn.recv()
+        return False
+
+
+def setup_tpch_db(datadir, engine="duckdb", threads=os.cpu_count()):
     db = BACKENDS.get(engine)()
     tables = [
         "customer",
@@ -71,7 +131,7 @@ def setup_tpch_db(datadir, engine="duckdb", threads=8):
     for t in tables:
         path = datadir / "raw" / f"{t}.parquet"
         db.register(f"{path}", t)
-    db.con.execute(f"PRAGMA threads={threads};")
+    db.raw_sql(f"PRAGMA threads={threads};")
     return db
 
 
@@ -98,77 +158,22 @@ def is_powercap_available():
     else:
         return False
 
-class PowercapRapl(Process):
-    def __init__(self, pipe, *args, **kw):
-        self.pipe = pipe
-        super(PowercapRapl, self).__init__(*args, **kw)
 
-    def run(self):
-        self.pipe.send(0)
-        stop = False
-        energy_uj = []
-        start_time = timeit.default_timer()
-        while True:
-            with open(
-                "/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/energy_uj"
-            ) as rapl:
-                energy_uj.append(int(rapl.read()))
-            if stop:
-                if energy_uj[0] > energy_uj[-1]:
-                    energy_uj[-1] = energy_uj[-1] + 65532610987
-                stop_time = timeit.default_timer()
-                self.pipe.send((energy_uj[-1] - energy_uj[0], stop_time - start_time))
-                break
-            stop = self.pipe.poll(0.1)
-
-
-class PowercapRaplProfiler:
-    def __init__(self):
-        self.results = []
-        self.total_time = None
-
-    def __enter__(self):
-        self.child_conn, self.parent_conn = Pipe()
-        p = PowercapRapl(self.child_conn)
-        p.start()
-        self.parent_conn.recv()
-        return self
-
-    def __exit__(self, exc_type, exc_value, exc_traceback):
-        self.parent_conn.send(0)
-        self.results, self.total_time = self.parent_conn.recv()
-        return False
-
-def aggregate_power_stats(power_results):
-    cpus = pd.json_normalize(power_results, ["processor", "clusters", "cpus"])
-    clusters = pd.json_normalize(power_results, ["processor", "clusters"])
-    total = pd.json_normalize(power_results)
-    return {
-        # "idle_ratio_cpus": list(cpus.groupby("cpu").idle_ratio.mean()),
-        # "freq_hz": list(cpus.groupby("cpu").freq_hz.mean()),
-        "power_mW": sum(list(clusters.groupby("name").mean().power.values)),
-        "package_energy_sum": int(total["processor.package_energy"].sum()),
-        "cpu_mJ": int(total["processor.cpu_energy"].sum()),
-        # "dram_energy_sum": int(total["processor.dram_energy"].sum()),
-        # "elapsed_ns": int(total["elapsed_ns"].sum()),
-    }
-
-
-def profile_run(query, datadir, engine, threads):
+def timed_run(query, datadir, engine, threads):
     db = setup_tpch_db(datadir, engine, threads)
-    expression = QUERIES_TPCH[query](db)
+    query = QUERIES_TPCH[query](db)
     start_time_process = timeit.default_timer()
     start_time_cpu = time.process_time()
-    result = expression.execute()  # TODO validate
+    result = query.execute()  # TODO validate
     total_time_cpu = time.process_time() - start_time_cpu
     total_time_process = timeit.default_timer() - start_time_process
     return total_time_process, total_time_cpu
 
 
-def run_query(query, powermetrics, datadir, engine, threads, comment):
+def execute(query, powermetrics, datadir, engine, threads, comment):
     if powermetrics and is_powercap_available():
         with PowercapRaplProfiler() as power:
-            total_time_process, total_time_cpu = profile_run(
+            total_time_process, total_time_cpu = timed_run(
                 query, datadir, engine, threads
             )
         power_cpu = {
@@ -176,9 +181,7 @@ def run_query(query, powermetrics, datadir, engine, threads, comment):
             "power_mW": power.results / power.total_time / 10**3,
         }
     else:
-        total_time_process, total_time_cpu = profile_run(
-            query, datadir, engine, threads
-        )
+        total_time_process, total_time_cpu = timed_run(query, datadir, engine, threads)
         power_cpu = {}
 
     run_stats = {
@@ -194,29 +197,15 @@ def run_query(query, powermetrics, datadir, engine, threads, comment):
     return run_stats
 
 
-def run_query_in_subprocess(*args):
+def run_method_in_subprocess(f, *args):
     with concurrent.futures.ProcessPoolExecutor(max_workers=1) as e:
-        f = e.submit(run_query, *args)
+        f = e.submit(f, *args)
         try:
             concurrent.futures.wait([f])
             data = f.result()
         except Exception as e:
             raise (e)
-            data = {
-                "name": args[0],
-                "threads": args[4],
-                "run_date": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                "total_time_process": None,
-                "total_time_cpu": None,
-                "comment": args[5],
-                "success": False,
-            }
     return data
-
-
-@click.group()
-def cli():
-    pass
 
 
 @click.command()
@@ -272,8 +261,8 @@ def tpch(datadir, powermetrics, engines, queries, threads, comment, repeat):
         for datadir, engine, thread in itertools.product(datadirs, engines, threads):
             datadir = Path(datadir)
             stats = [
-                run_query_in_subprocess(
-                    query, powermetrics, datadir, engine, thread, comment
+                run_method_in_subprocess(
+                    execute, query, powermetrics, datadir, engine, thread, comment
                 )
                 for query in queries
             ]
@@ -291,7 +280,5 @@ def tpch(datadir, powermetrics, engines, queries, threads, comment, repeat):
     click.echo(df.to_csv(index=False))
 
 
-cli.add_command(tpch)
-
 if __name__ == "__main__":
-    cli()
+    tpch()
