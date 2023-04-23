@@ -1,0 +1,3 @@
+[submodule "tpc-queries"]
+	path = tpc-queries
+	url = https://github.com/ibis-project/tpc-queries
