@@ -44,7 +44,7 @@ from ibis_tpc import (
     h22,
 )
 
-BACKENDS = {"duckdb": ibis.duckdb.connect}
+BACKENDS = {"datafusion": ibis.datafusion.connect, "duckdb": ibis.duckdb.connect}
 
 QUERIES_TPCH = {
     "h01": h01.tpc_h01,
@@ -131,7 +131,7 @@ def setup_tpch_db(datadir, engine="duckdb", threads=os.cpu_count()):
     for t in tables:
         path = datadir / "raw" / f"{t}.parquet"
         db.register(f"{path}", t)
-    db.raw_sql(f"PRAGMA threads={threads};")
+    #db.raw_sql(f"PRAGMA threads={threads};")
     return db
 
 
@@ -161,10 +161,14 @@ def is_powercap_available():
 
 def timed_run(query, datadir, engine, threads):
     db = setup_tpch_db(datadir, engine, threads)
-    query = QUERIES_TPCH[query](db)
+    # create a temporary duckdb database to genrate sql string
+    backend = setup_tpch_db(datadir) 
+    #result = query.execute()  # TODO validate
+    query = QUERIES_TPCH[query](backend)
+    sql = str(ibis.to_sql(query))
     start_time_process = timeit.default_timer()
     start_time_cpu = time.process_time()
-    result = query.execute()  # TODO validate
+    db._context.sql(sql).to_pandas()
     total_time_cpu = time.process_time() - start_time_cpu
     total_time_process = timeit.default_timer() - start_time_process
     return total_time_process, total_time_cpu
@@ -204,7 +208,16 @@ def run_method_in_subprocess(f, *args):
             concurrent.futures.wait([f])
             data = f.result()
         except Exception as e:
-            raise (e)
+            #raise (e)
+            data  = {
+        "name": args[0],
+        "threads": args[1],
+        "run_date": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "total_time_process": None,
+        "total_time_cpu": None,
+        "comment": args[5],
+        "success": False,
+    }
     return data
 
 
