@@ -1,0 +1,24 @@
+name,threads,run_date,total_time_process,total_time_cpu,comment,success,cpu_mJ,power_mW,datadir,db,runno
+h01,48,27/04/2023 11:02:07,328.40111246499873,371.115261166,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h02,48,27/04/2023 11:03:43,93.14606258200365,392.347596334,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h03,48,27/04/2023 11:07:19,214.43168111200794,518.338397799,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h04,48,27/04/2023 11:09:56,155.10057102699648,356.471609413,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h05,48,27/04/2023 11:15:33,334.43812652499764,1523.908401079,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h06,48,27/04/2023 11:16:55,79.59449800899893,142.478976515,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h07,48,27/04/2023 11:22:55,358.12626051099505,3609.694081235,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h08,48,27/04/2023 11:29:34,395.4382803560002,796.3249829819999,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h09,48,27/04/2023 11:35:33,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h10,48,27/04/2023 11:39:45,248.92516051100392,747.333199715,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h11,48,27/04/2023 11:39:47,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h12,48,27/04/2023 11:44:17,267.941626550004,1032.195115585,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h13,48,27/04/2023 11:47:42,202.71356267599913,1130.531739686,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h14,48,27/04/2023 11:49:43,118.67311962900567,194.08573834700002,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h15,48,27/04/2023 11:49:45,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h16,48,27/04/2023 11:49:47,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h17,48,27/04/2023 11:49:49,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h18,48,27/04/2023 11:52:51,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h19,48,27/04/2023 11:57:54,300.56859004199214,364.89524036299997,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h20,48,27/04/2023 11:57:56,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h21,48,27/04/2023 11:57:58,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h22,48,27/04/2023 11:58:00,,,,False,,,../fanniemae-benchmark/sf500,datafusion,1
+

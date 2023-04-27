@@ -1,0 +1,24 @@
+name,threads,run_date,total_time_process,total_time_cpu,comment,success,cpu_mJ,power_mW,datadir,db,runno
+h01,48,27/04/2023 12:48:39,65.63841331699223,74.265709268,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h02,48,27/04/2023 12:48:58,17.177470894996077,74.372100228,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h03,48,27/04/2023 12:49:41,42.07879867999873,97.736069588,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h04,48,27/04/2023 12:50:12,30.32339541699912,66.17798959999999,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h05,48,27/04/2023 12:51:19,64.98375976100215,275.895345155,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h06,48,27/04/2023 12:51:34,14.591361778002465,27.601465564,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h07,48,27/04/2023 12:52:32,55.98037485599343,473.40946542,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h08,48,27/04/2023 12:53:44,70.92415493899898,145.373655459,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h09,48,27/04/2023 12:55:46,119.79064574900258,1649.3037168649998,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h10,48,27/04/2023 12:56:30,42.974570678998134,140.002416884,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h11,48,27/04/2023 12:56:31,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h12,48,27/04/2023 12:57:20,47.60884795499442,149.07471452599998,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h13,48,27/04/2023 12:58:00,39.74496916399221,208.682233703,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h14,48,27/04/2023 12:58:19,17.48309043800691,36.980219634,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h15,48,27/04/2023 12:58:20,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h16,48,27/04/2023 12:58:21,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h17,48,27/04/2023 12:58:22,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h18,48,27/04/2023 13:02:08,224.8855263410078,1297.210514762,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h19,48,27/04/2023 13:03:09,59.76955149900459,70.779527809,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h20,48,27/04/2023 13:03:10,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h21,48,27/04/2023 13:03:11,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h22,48,27/04/2023 13:03:12,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+
