@@ -1,0 +1,23 @@
+name,threads,run_date,total_time_process,total_time_cpu,comment,success,cpu_mJ,power_mW,datadir,db,runno
+h01,48,28/04/2023 15:26:57,69.62870860198746,1929.148157245,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h02,48,28/04/2023 15:27:12,13.946182539977599,514.195155753,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h03,48,28/04/2023 15:28:39,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h04,48,28/04/2023 15:29:48,68.12247428999399,1089.504812854,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h05,48,28/04/2023 15:31:10,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h06,48,28/04/2023 15:31:32,20.6379226979916,200.373232815,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h07,48,28/04/2023 15:32:48,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h08,48,28/04/2023 15:36:08,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h09,48,28/04/2023 15:37:30,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h10,48,28/04/2023 15:38:53,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h11,48,28/04/2023 15:38:55,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h12,48,28/04/2023 15:40:00,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h13,48,28/04/2023 15:45:01,299.1553898069833,13314.157667784,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h14,48,28/04/2023 15:45:54,52.256746031023795,1138.76624425,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h15,48,28/04/2023 15:45:55,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h16,48,28/04/2023 15:45:56,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h17,48,28/04/2023 15:45:56,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h18,48,28/04/2023 15:46:56,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h19,48,28/04/2023 15:47:45,47.45463325298624,741.738554724,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h20,48,28/04/2023 15:47:46,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h21,48,28/04/2023 15:47:47,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h22,48,28/04/2023 15:47:48,,,,False,,,../fanniemae-benchmark/sf100,datafusion,1
