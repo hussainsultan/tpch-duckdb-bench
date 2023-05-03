@@ -1,0 +1,30 @@
+name,threads,run_date,total_time_process,total_time_cpu,comment,success,cpu_mJ,power_mW,datadir,db,runno
+h01,48,03/05/2023 14:40:13,36.31399450695608,1362.9600781909999,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h02,48,03/05/2023 14:41:33,80.25585077702999,643.9757155,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h03,48,03/05/2023 14:42:11,37.34297607699409,1300.10969507,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h04,48,03/05/2023 14:42:43,30.696258131065406,1056.1740224959995,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h05,48,03/05/2023 14:43:45,62.1037370050326,2014.3507638249994,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h06,48,03/05/2023 14:44:07,20.613844539038837,767.0147328209996,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h07,48,03/05/2023 14:44:53,,,External error: External error: External error: External error: External error: External error: External error: External error: Resources exhausted: Failed to allocate additional 1107296272 bytes for HashJoinStream[9] with 686618496 bytes already allocated - maximum available is 69707984,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h08,48,03/05/2023 14:45:56,61.248570010997355,1836.8136221980003,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h09,48,03/05/2023 14:47:19,81.82290103600826,2732.3441914369996,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h10,48,03/05/2023 14:48:27,67.59418703301344,1666.9148115379994,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h11,48,03/05/2023 14:49:24,56.82771405798849,704.8798663039997,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h12,48,03/05/2023 14:49:39,,,External error: External error: Resources exhausted: Failed to allocate additional 1107296272 bytes for HashJoinStream[33] with 323737344 bytes already allocated - maximum available is 861232096,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h13,48,03/05/2023 14:50:50,67.06660941196606,2572.074661573999,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h14,48,03/05/2023 14:51:11,20.622772567905486,491.59577387100217,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h15,48,03/05/2023 14:51:11,,,"DataFusion error: NotImplemented(""The context currently only supports a single SQL statement"")",False,,,../fanniemae-benchmark/sf500,datafusion,1
+h16,48,03/05/2023 14:51:41,,,"Schema at index 0 was different: 
+p_brand: string
+p_type: string
+p_size: int64
+supplier_cnt: int64
+vs
+part.p_brand: string
+part.p_type: string
+part.p_size: int64
+supplier_cnt: int64",False,,,../fanniemae-benchmark/sf500,datafusion,1
+h19,48,03/05/2023 14:52:04,22.63317150005605,801.4966666870023,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+h21,48,03/05/2023 14:53:02,,,External error: External error: External error: External error: External error: External error: External error: Resources exhausted: Failed to allocate additional 380240 bytes for HashJoinStream[20] with 1324851184 bytes already allocated - maximum available is 2592,False,,,../fanniemae-benchmark/sf500,datafusion,1
+h22,48,03/05/2023 14:53:37,33.25810837803874,365.77061089700146,,True,,,../fanniemae-benchmark/sf500,datafusion,1
+

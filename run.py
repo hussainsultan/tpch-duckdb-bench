@@ -15,35 +15,15 @@ import click
 import ibis
 import pandas as pd
 import psutil
+import requests
+from datafusion import RuntimeConfig, SessionConfig, SessionContext
 
 warnings.filterwarnings("ignore")  # ibis throws some warnings
 # assumes that submodule is present in parent directory
 sys.path.append("tpc-queries")
 
-from ibis_tpc import (
-    h01,
-    h02,
-    h03,
-    h04,
-    h05,
-    h06,
-    h07,
-    h08,
-    h09,
-    h10,
-    h11,
-    h12,
-    h13,
-    h14,
-    h15,
-    h16,
-    h17,
-    h18,
-    h19,
-    h20,
-    h21,
-    h22,
-)
+from ibis_tpc import (h01, h02, h03, h04, h05, h06, h07, h08, h09, h10, h11,
+                      h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22)
 
 BACKENDS = {
     "datafusion": ibis.datafusion.connect,
@@ -163,23 +143,81 @@ def is_powercap_available():
         return False
 
 
+def remove_lines_starting_with_dashes(text):
+    """Removes all the lines that start with "--" from the given text.
+
+    Args:
+      text: The text to remove the lines from.
+
+    Returns:
+      The text with the lines removed.
+    """
+
+    lines = text.splitlines()
+    new_lines = []
+    for line in lines:
+        if not line.startswith("--"):
+            new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+
+def get_datafusion_sql(key):
+    link = f"https://raw.githubusercontent.com/sql-benchmarks/sqlbench-h/main/queries/sf%3D1000/{key}.sql"
+    response = requests.get(link)
+    query = remove_lines_starting_with_dashes(response.text)
+    return query
+
+
+def setup_datafusion(datadir):
+    # runtime = (RuntimeConfig().with_disk_manager_os().with_fair_spill_pool(64000000000))
+    runtime = (
+        RuntimeConfig().with_disk_manager_os().with_greedy_memory_pool(64000000000)
+    )
+    config = (
+        SessionConfig()
+        .with_create_default_catalog_and_schema(True)
+        .with_target_partitions(48)
+        .with_information_schema(True)
+        .with_repartition_joins(True)
+        .with_repartition_aggregations(True)
+        .with_repartition_windows(True)
+        .with_parquet_pruning(True)
+        .set("datafusion.execution.parquet.pushdown_filters", "true")
+    )
+
+    db = SessionContext(config, runtime)
+    tables = [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier",
+    ]
+    for t in tables:
+        path = datadir / "raw" / f"{t}.parquet"
+        db.register_parquet(t, f"{path}")
+    return db
+
+
 def timed_run(query, datadir, engine, threads):
-    time.sleep(0.1)
-    db = setup_tpch_db(datadir, engine, threads)
+    query = "q" + query[1:].lstrip("0")
+    # db = setup_tpch_db(datadir, engine, threads)
+    db = setup_datafusion(datadir)
     # create a temporary duckdb database to genrate sql string
-    backend = setup_tpch_db(datadir)
-    query = QUERIES_TPCH[query](backend)
-    sql = str(ibis.to_sql(query))
+    sql = get_datafusion_sql(query)
     start_time_process = timeit.default_timer()
     start_time_cpu = time.process_time()
-    result = db._context.sql(sql).collect()
+    result = db.sql(sql).to_pandas()
     total_time_cpu = time.process_time() - start_time_cpu
     total_time_process = timeit.default_timer() - start_time_process
-    time.sleep(0.1)
     return total_time_process, total_time_cpu
 
 
-def execute(query, powermetrics, datadir, engine, threads, comment):
+def experiment(query, powermetrics, datadir, engine, threads, comment):
     if powermetrics and is_powercap_available():
         with PowercapRaplProfiler() as power:
             total_time_process, total_time_cpu = timed_run(
@@ -206,25 +244,22 @@ def execute(query, powermetrics, datadir, engine, threads, comment):
     return run_stats
 
 
-def run_method_in_subprocess(f, *args):
-    with concurrent.futures.ProcessPoolExecutor(max_workers=1) as e:
-        f = e.submit(f, *args)
-        try:
-            concurrent.futures.wait([f])
-            data = f.result()
-        except Exception as e:
-            # raise (e)
-            data = {
-                "name": args[0],
-                "threads": args[4],
-                "run_date": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                "total_time_process": None,
-                "total_time_cpu": None,
-                "comment": args[5],
-                "success": False,
-                "cpu_mJ": None,
-                "power_mW": None,
-            }
+def run_experiment(f, *args):
+    try:
+        data = f(*args)
+    except Exception as e:
+        # raise (e)
+        data = {
+            "name": args[0],
+            "threads": args[4],
+            "run_date": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+            "total_time_process": None,
+            "total_time_cpu": None,
+            "comment": str(e),
+            "success": False,
+            "cpu_mJ": None,
+            "power_mW": None,
+        }
     return data
 
 
@@ -281,8 +316,8 @@ def tpch(datadir, powermetrics, engines, queries, threads, comment, repeat):
         for datadir, engine, thread in itertools.product(datadirs, engines, threads):
             datadir = Path(datadir)
             stats = [
-                run_method_in_subprocess(
-                    execute, query, powermetrics, datadir, engine, thread, comment
+                run_experiment(
+                    experiment, query, powermetrics, datadir, engine, thread, comment
                 )
                 for query in queries
             ]
