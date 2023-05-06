@@ -1,20 +1,20 @@
 name,threads,run_date,total_time_process,total_time_cpu,comment,success,cpu_mJ,power_mW,datadir,db,runno
-h01,48,03/05/2023 15:10:40,7.106889534043148,281.146557772,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h02,48,03/05/2023 15:10:54,13.986148928990588,120.07967562599998,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h03,48,03/05/2023 15:11:01,7.134927387931384,241.22508429199996,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h04,48,03/05/2023 15:11:07,6.14611217007041,198.67977016300006,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h05,48,03/05/2023 15:11:20,11.934435948031023,354.47665263199985,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h06,48,03/05/2023 15:11:23,3.6611159609165043,131.05617098599987,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h07,48,03/05/2023 15:11:47,23.11114086804446,719.353708229,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h08,48,03/05/2023 15:11:57,10.297254647011869,265.4906263109997,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h09,48,03/05/2023 15:12:13,16.248214730992913,495.8346273970001,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h10,48,03/05/2023 15:12:25,11.514666625997052,305.80158496600006,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h11,48,03/05/2023 15:12:37,12.149710937985219,126.3726141760003,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h12,48,03/05/2023 15:12:47,9.104918344994076,308.01188856299996,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h13,48,03/05/2023 15:12:56,9.638281036051922,386.62496452100004,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h14,48,03/05/2023 15:13:00,3.3031562799587846,103.8246913590001,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h15,48,03/05/2023 15:13:00,,,"DataFusion error: NotImplemented(""The context currently only supports a single SQL statement"")",False,,,../fanniemae-benchmark/sf100,datafusion,1
-h16,48,03/05/2023 15:13:05,,,"Schema at index 0 was different: 
+h01,48,06/05/2023 12:00:58,4.99923515599221,108.201304638,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h02,48,06/05/2023 12:01:10,12.227655329974368,103.15312089899999,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h03,48,06/05/2023 12:01:17,6.25103185500484,170.199015286,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h04,48,06/05/2023 12:01:23,5.928271350916475,154.328032232,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h05,48,06/05/2023 12:01:33,9.730475486954674,268.5391807059999,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h06,48,06/05/2023 12:01:36,2.9508214379893616,67.23794897900007,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h07,48,06/05/2023 12:01:56,20.379957321099937,498.1757622570001,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h08,48,06/05/2023 12:02:04,6.99248810892459,183.07594740700006,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h09,48,06/05/2023 12:02:17,13.17047150095459,348.0941250640001,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h10,48,06/05/2023 12:02:28,10.51991521101445,234.88603863399976,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h11,48,06/05/2023 12:02:39,11.340508879977278,120.67221754599996,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h12,48,06/05/2023 12:02:48,8.715042333933525,216.0992430829997,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h13,48,06/05/2023 12:02:58,9.82538282906171,284.76909563599975,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h14,48,06/05/2023 12:03:01,2.6420152690261602,61.51783656400039,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h15,48,06/05/2023 12:03:09,7.843547793920152,279.60693841099965,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h16,48,06/05/2023 12:03:14,,,"Schema at index 0 was different: 
 p_brand: string
 p_type: string
 p_size: int64
@@ -24,10 +24,10 @@ part.p_brand: string
 part.p_type: string
 part.p_size: int64
 supplier_cnt: int64",False,,,../fanniemae-benchmark/sf100,datafusion,1
-h17,48,03/05/2023 15:13:42,,,External error: External error: External error: Resources exhausted: Failed to allocate additional 553648144 bytes for HashJoinStream[18] with 301191744 bytes already allocated - maximum available is 463958290,False,,,../fanniemae-benchmark/sf100,datafusion,1
-h18,48,03/05/2023 15:14:20,,,External error: External error: Resources exhausted: Failed to allocate additional 597728 bytes for HashJoinStream[9] with 753911928 bytes already allocated - maximum available is 391486,False,,,../fanniemae-benchmark/sf100,datafusion,1
-h19,48,03/05/2023 15:14:30,9.752924515050836,177.61328510299973,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h20,48,03/05/2023 15:14:47,16.86624976794701,517.5392273409998,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h21,48,03/05/2023 15:15:32,44.863185033085756,1235.4444397450006,,True,,,../fanniemae-benchmark/sf100,datafusion,1
-h22,48,03/05/2023 15:15:38,5.524292705929838,56.433847363001405,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h17,48,06/05/2023 12:04:21,67.45662958500907,1929.3403519629996,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h18,48,06/05/2023 12:04:43,,,External error: External error: Resources exhausted: Failed to allocate additional 601544 bytes for HashJoinStream[23] with 1611142756 bytes already allocated - maximum available is 343485,False,,,../fanniemae-benchmark/sf100,datafusion,1
+h19,48,06/05/2023 12:04:52,8.244362174998969,126.30835188699984,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h20,48,06/05/2023 12:05:09,16.045569058973342,356.4972982090003,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h21,48,06/05/2023 12:05:45,36.229980216012336,923.6538109310004,,True,,,../fanniemae-benchmark/sf100,datafusion,1
+h22,48,06/05/2023 12:05:49,4.168941842042841,43.083058557000186,,True,,,../fanniemae-benchmark/sf100,datafusion,1
 

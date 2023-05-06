@@ -166,18 +166,19 @@ def get_datafusion_sql(key):
     link = f"https://raw.githubusercontent.com/sql-benchmarks/sqlbench-h/main/queries/sf%3D1000/{key}.sql"
     response = requests.get(link)
     query = remove_lines_starting_with_dashes(response.text)
+    query = query.split(";")
     return query
 
 
 def setup_datafusion(datadir):
     # runtime = (RuntimeConfig().with_disk_manager_os().with_fair_spill_pool(64000000000))
     runtime = (
-        RuntimeConfig().with_disk_manager_os().with_greedy_memory_pool(64000000000)
+        RuntimeConfig().with_disk_manager_os().with_fair_spill_pool(64000000000)
     )
     config = (
         SessionConfig()
         .with_create_default_catalog_and_schema(True)
-        .with_target_partitions(48)
+        .with_target_partitions(24)
         .with_information_schema(True)
         .with_repartition_joins(True)
         .with_repartition_aggregations(True)
@@ -211,7 +212,9 @@ def timed_run(query, datadir, engine, threads):
     sql = get_datafusion_sql(query)
     start_time_process = timeit.default_timer()
     start_time_cpu = time.process_time()
-    result = db.sql(sql).to_pandas()
+    for q in sql: # fix for q15 that has multiple statements
+        if len(q) >0:
+            result = db.sql(q).to_pandas()
     total_time_cpu = time.process_time() - start_time_cpu
     total_time_process = timeit.default_timer() - start_time_process
     return total_time_process, total_time_cpu
