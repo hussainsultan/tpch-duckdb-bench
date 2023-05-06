@@ -178,7 +178,7 @@ def setup_datafusion(datadir):
     config = (
         SessionConfig()
         .with_create_default_catalog_and_schema(True)
-        .with_target_partitions(24)
+        .with_target_partitions(48)
         .with_information_schema(True)
         .with_repartition_joins(True)
         .with_repartition_aggregations(True)
@@ -212,7 +212,7 @@ def timed_run(query, datadir, engine, threads):
     sql = get_datafusion_sql(query)
     start_time_process = timeit.default_timer()
     start_time_cpu = time.process_time()
-    for q in sql: # fix for q15 that has multiple statements
+    for q in sql:
         if len(q) >0:
             result = db.sql(q).to_pandas()
     total_time_cpu = time.process_time() - start_time_cpu
