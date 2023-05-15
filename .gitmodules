@@ -1,3 +1,6 @@
 [submodule "tpc-queries"]
 	path = tpc-queries
 	url = https://github.com/ibis-project/tpc-queries
+[submodule "polars_tpch"]
+	path = polars_tpch
+	url = https://github.com/pola-rs/tpch.git
