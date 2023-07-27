@@ -149,7 +149,7 @@ def run_method_in_subprocess(f, *args):
     try:
         data = f(*args)
     except Exception as e:
-        raise (e)
+        #raise (e)
         data  = {
     "name": args[0],
     "threads": args[1],
