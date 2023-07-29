@@ -1,0 +1,48 @@
+include io: False
+show results: False
+log timings: False
+file type: parquet
+Code block 'Get result of polars Query 1' took: 2.27283 s
+Code block 'Overall execution of polars Query 1' took: 2.27287 s
+Code block 'Get result of polars Query 2' took: 0.03955 s
+Code block 'Overall execution of polars Query 2' took: 0.03960 s
+Code block 'Get result of polars Query 3' took: 0.68580 s
+Code block 'Overall execution of polars Query 3' took: 0.68583 s
+Code block 'Get result of polars Query 4' took: 0.35157 s
+Code block 'Overall execution of polars Query 4' took: 0.35161 s
+Code block 'Get result of polars Query 5' took: 0.28541 s
+Code block 'Overall execution of polars Query 5' took: 0.28545 s
+Code block 'Get result of polars Query 6' took: 0.53393 s
+Code block 'Overall execution of polars Query 6' took: 0.53396 s
+Code block 'Get result of polars Query 7' took: 1.37693 s
+Code block 'Overall execution of polars Query 7' took: 1.37697 s
+Code block 'Get result of polars Query 8' took: 0.25070 s
+Code block 'Overall execution of polars Query 8' took: 0.25074 s
+Code block 'Get result of polars Query 9' took: 3.56381 s
+Code block 'Overall execution of polars Query 9' took: 3.56384 s
+Code block 'Get result of polars Query 10' took: 0.81761 s
+Code block 'Overall execution of polars Query 10' took: 0.81764 s
+Code block 'Get result of polars Query 11' took: 0.19507 s
+Code block 'Overall execution of polars Query 11' took: 0.19511 s
+Code block 'Get result of polars Query 12' took: 1.16805 s
+Code block 'Overall execution of polars Query 12' took: 1.16808 s
+Code block 'Get result of polars Query 13' took: 2.81059 s
+Code block 'Overall execution of polars Query 13' took: 2.81062 s
+Code block 'Get result of polars Query 14' took: 0.60830 s
+Code block 'Overall execution of polars Query 14' took: 0.60833 s
+Code block 'Get result of polars Query 15' took: 0.56723 s
+Code block 'Overall execution of polars Query 15' took: 0.56726 s
+Code block 'Get result of polars Query 16' took: 0.23574 s
+Code block 'Overall execution of polars Query 16' took: 0.23579 s
+Code block 'Get result of polars Query 17' took: 1.17656 s
+Code block 'Overall execution of polars Query 17' took: 1.17659 s
+Code block 'Get result of polars Query 18' took: 1.27497 s
+Code block 'Overall execution of polars Query 18' took: 1.27501 s
+Code block 'Get result of polars Query 19' took: 1.14043 s
+Code block 'Overall execution of polars Query 19' took: 1.14046 s
+Code block 'Get result of polars Query 20' took: 0.83943 s
+Code block 'Overall execution of polars Query 20' took: 0.83951 s
+Code block 'Get result of polars Query 21' took: 6.29522 s
+Code block 'Overall execution of polars Query 21' took: 6.29525 s
+Code block 'Get result of polars Query 22' took: 0.31435 s
+Code block 'Overall execution of polars Query 22' took: 0.31438 s
